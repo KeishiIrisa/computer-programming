@@ -9,7 +9,7 @@ class Line:
         print(self.arr1[index_next]) 
     
     def prev(self, s):
-        index_prev = self.arr1.index(s) -1
+        index_prev = self.arr1.index(s) - 1
         print(self.arr1[index_prev])
 
     def next_exp(self, s):
