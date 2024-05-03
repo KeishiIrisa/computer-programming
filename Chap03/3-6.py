@@ -47,17 +47,9 @@ def inorder(n, is_left):
             glb_sequence_inorder.append(")")
         
 
-
 class Tree():
     def __init__(self, root_node):
         self.root = root_node
-    
-    def size(self):
-        if self.root is None:
-            return 0
-        else:
-            preorder(self.root)
-            return len(glb_count)
  
     def  __str__(self):
         if self.root is None:
@@ -65,7 +57,19 @@ class Tree():
         else:
             inorder(self.root, False)
             return "".join(glb_sequence_inorder)
+    
+    def size(self):
+        if self.root is None:
+            return 0
+        else:
+            preorder(self.root)
+            return len(glb_count)
 
-
+    def height(self):
+        if self.root is None:
+            return -1
+        else:
+            inorder(self.root, False)
+            return glb_sequence_inorder.count(")")
 
 exec(input())
