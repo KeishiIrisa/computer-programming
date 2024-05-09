@@ -55,6 +55,34 @@ class Tree():
                 stack.append(n)
         self.root = stack.pop()
         return self
+    
+    def parse_inorder_string(self, line):
+        node_array = [Node(x) for x in line.split(" ")]
+        self.root = self.e(node_array)
+        return self
+    
+    def f(self, node_array):
+        if len(node_array) == 0:
+            return None
+        elif node_array[0].value in "1234567890":
+            return node_array.pop(0)
+        else:
+            print("syntax error")
+            return
+    
+    def t(self, node_array):
+        n = self.f(node_array)
+        if len(node_array) != 0 and node_array[0].value == "*":
+            return node_array.pop(0).set_nodes(n, self.t(node_array))
+        else:
+            return n
+    
+    def e(self, node_array):
+        n = self.t(node_array)
+        if len(node_array) != 0 and node_array[0].value in "+-":
+            return node_array.pop(0).set_nodes(n, self.e(node_array))
+        else:
+            return n
 
 
 exec(input())
