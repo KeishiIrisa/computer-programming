@@ -5,9 +5,9 @@ class Node:
         self.right = None
 
     def __str__(self):
-        if self.value is None:
-            return ""
-        return self.value
+        if self.value in "+-*":
+            return f"({self.left}{self.value}{self.right})"
+        return str(self.value)
 
     def set_nodes(self, x, y):
         if not isinstance(x, Node) or not isinstance(y, Node):
@@ -17,59 +17,34 @@ class Node:
         return self
 
 
-glb_count = []
-glb_sequence_inorder = []
-
-
-def preorder(n):
-    if n is None:
-        return glb_count
-    else:
-        glb_count.append(0)
-        preorder(n.left)
-        preorder(n.right)
-
-
-def inorder(n, is_left):
-    if n is None:
-        return 
-    elif is_left:
-        inorder(n.left, True)
-        glb_sequence_inorder.extend(["(", n.value])
-        inorder(n.right, False)
-    elif not is_left and n.value in ["+", "-", "*", "%"]:
-        inorder(n.left, True)
-        glb_sequence_inorder.append(n.value)
-        inorder(n.right, False)
-    else:
-        glb_sequence_inorder.append(n.value)
-        for i in range(glb_sequence_inorder.count("(")):
-            glb_sequence_inorder.append(")")
-        
-
 class Tree():
     def __init__(self, root_node):
         self.root = root_node
  
-    def  __str__(self):
+    def __str__(self):
         if self.root is None:
             return ""
-        else:
-            inorder(self.root, False)
-            return "".join(glb_sequence_inorder)
+        return str(self.root)
     
     def size(self):
-        if self.root is None:
+        return self._size(self.root)
+
+    def _size(self, node):
+        if node is None:
             return 0
         else:
-            preorder(self.root)
-            return len(glb_count)
+            return self._size(node.left) + 1 + self._size(node.right)
 
     def height(self):
-        if self.root is None:
+        return self._height(self.root)
+
+    def _height(self, node):
+        if node is None:
             return -1
         else:
-            inorder(self.root, False)
-            return glb_sequence_inorder.count(")")
+            left_height = self._height(node.left)
+            right_height = self._height(node.right)
+            return 1 + max(left_height, right_height)
+
 
 exec(input())
